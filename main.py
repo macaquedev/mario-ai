@@ -3,6 +3,11 @@ import numpy
 import pickle
 from pygame.time import Clock
 
+# to-do:
+# make mario slow down when jumping at the point where everything starts scrolling
+# create platforms
+# create enemies
+
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
@@ -13,6 +18,7 @@ pygame.mixer.music.play(-1)
 clock = Clock()
 RUN_SPEED = 10
 JUMP_SPEED = 20
+SCROLL_SPEED = RUN_SPEED
 ANIMATION_SPEED = 5
 FPS = 30
 BG_IMAGE = pygame.image.load('bg_img.jpg')
@@ -57,7 +63,7 @@ class Mario:
             self.in_air = True
             if oy - self.y < 300 and self.can_jump:
                 self.y -= JUMP_SPEED
-                self.run_speed = JUMP_SPEED * 0.3
+                self.run_speed = RUN_SPEED * 0.3
             else:
                 self.can_jump = False
         if self.y > 850 or self.block_under:
@@ -69,6 +75,8 @@ class Mario:
         if self.y < 0:
             self.y += JUMP_SPEED
             self.jump = False
+        if self.x < 0:
+            self.x = 0
         if keys[pygame.K_ESCAPE]:
             exit()
         for event in pygame.event.get():
@@ -112,8 +120,8 @@ while True:
     draw_window(sc)
     mario.move()
     if mario.x > 1920 / 2 - 75:
-        bgX -= 10
-        bgX2 -= 10
+        bgX -= SCROLL_SPEED
+        bgX2 -= SCROLL_SPEED
         mario.x = 1920 / 2 - 75
     if bgX < BG_IMAGE.get_width() * -1:
         bgX = BG_IMAGE.get_width() - 10
