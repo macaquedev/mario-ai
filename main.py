@@ -36,9 +36,7 @@ class Mario:
         sc.blit(self.img, (self.x, self.y))
 
     def move(self):
-        if self.jump:
-            cy = [self.y]
-            oy = cy[:]
+        oy = self.y
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
             self.x -= self.speed
@@ -48,11 +46,7 @@ class Mario:
         if keys[pygame.K_w]:
             self.img = MARIO_JUMP
             self.jump = True
-            oy = [860]  # make this dynamic from where you started jumping
-            # make it so that oy doesn't refresh every time it checks you are jumping
-            # and instead it makes 1 copy of cy for a constant oy
-            # make sure you can't continue to stay in the air when you reach the jump limit or when y<0
-            if oy[0] - self.y < 300:
+            if oy - self.y < 300:
                 self.y -= SPEED
                 self.speed = SPEED * 0.3
         if self.y > 850 or self.block_under:
