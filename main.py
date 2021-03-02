@@ -3,20 +3,22 @@ import numpy
 import pickle
 from pygame.time import Clock
 
-clock = Clock()
-
-SPEED = 10
-ANIMATION_SPEED = 5
-
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
+clock = Clock()
+SPEED = 10
+ANIMATION_SPEED = 5
+FPS = 30
 BG_IMAGE = pygame.image.load('bg_img.jpg')
 MARIO = pygame.image.load('mario_still.png')
 MARIO_RUN_0 = pygame.image.load('mario_run_0.png')
 MARIO_RUN_1 = pygame.image.load('mario_run_1.png')
 MARIO_RUN_2 = pygame.image.load('mario_run_2.png')
 MARIO_JUMP = pygame.image.load('mario_jump.png')
+
+bgX = 0
+bgX2 = BG_IMAGE.get_width()
 
 
 class Mario:
@@ -93,13 +95,23 @@ mario = Mario()
 
 
 def draw_window(sc):
-    sc.blit(BG_IMAGE, (0, 0))
+    sc.blit(BG_IMAGE, (bgX, 0))
+    sc.blit(BG_IMAGE, (bgX2, 0))
     mario.draw()
 
 
 while True:
     sc.fill((0, 0, 0))
-    clock.tick(30)
+    clock.tick(FPS)
     draw_window(sc)
     mario.move()
+    if mario.x > 1920 / 2 - 75:
+        bgX -= 7
+        bgX2 -= 7
+        mario.x = 1920 / 2 - 75
+    if bgX < BG_IMAGE.get_width() * -1:
+        bgX = BG_IMAGE.get_width() - 10
+    if bgX2 < BG_IMAGE.get_width() * -1:
+        bgX2 = BG_IMAGE.get_width() - 10
+
     pygame.display.update()
