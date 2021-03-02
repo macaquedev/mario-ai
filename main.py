@@ -6,8 +6,13 @@ from pygame.time import Clock
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
+pygame.mixer.init()
+pygame.mixer.music.load('mario_theme.mp3')
+pygame.mixer.music.play(-1)
+
 clock = Clock()
-SPEED = 10
+RUN_SPEED = 10
+JUMP_SPEED = 20
 ANIMATION_SPEED = 5
 FPS = 30
 BG_IMAGE = pygame.image.load('bg_img.jpg')
@@ -27,7 +32,8 @@ class Mario:
         self.x = 40
         self.y = 860
         self.animation_count = 0
-        self.speed = SPEED
+        self.run_speed = RUN_SPEED
+        self.jump_speed = JUMP_SPEED
         self.foo = 1
         self.bar = 1
         self.animation_speed = ANIMATION_SPEED
@@ -42,26 +48,26 @@ class Mario:
         oy = 860
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
-            self.x -= self.speed
+            self.x -= self.run_speed
         if keys[pygame.K_d]:
-            self.x += self.speed
+            self.x += self.run_speed
             self.animate()
         if keys[pygame.K_w]:
             self.img = MARIO_JUMP
             self.in_air = True
             if oy - self.y < 300 and self.can_jump:
-                self.y -= SPEED
-                self.speed = SPEED * 0.3
+                self.y -= JUMP_SPEED
+                self.run_speed = JUMP_SPEED * 0.3
             else:
                 self.can_jump = False
         if self.y > 850 or self.block_under:
             self.in_air = False
-            self.speed = SPEED
+            self.run_speed = RUN_SPEED
             self.can_jump = True
         if not self.block_under and self.y < 860:
-            self.y += SPEED / 2
+            self.y += JUMP_SPEED / 2
         if self.y < 0:
-            self.y += SPEED
+            self.y += JUMP_SPEED
             self.jump = False
         if keys[pygame.K_ESCAPE]:
             exit()
@@ -106,8 +112,8 @@ while True:
     draw_window(sc)
     mario.move()
     if mario.x > 1920 / 2 - 75:
-        bgX -= 7
-        bgX2 -= 7
+        bgX -= 10
+        bgX2 -= 10
         mario.x = 1920 / 2 - 75
     if bgX < BG_IMAGE.get_width() * -1:
         bgX = BG_IMAGE.get_width() - 10
