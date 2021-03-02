@@ -6,8 +6,8 @@ from pygame.time import Clock
 clock = Clock()
 
 SPEED = 10
+ANIMATION_SPEED = 5
 
-# when playing game: make the repl running screen bigger to be able to see the entire game
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
@@ -28,7 +28,7 @@ class Mario:
         self.speed = SPEED
         self.foo = 1
         self.bar = 1
-
+        self.animation_speed = ANIMATION_SPEED
         self.jump = False
         self.block_under = False
 
@@ -75,7 +75,7 @@ class Mario:
             elif self.animation_count == 2:
                 self.img = MARIO_RUN_2
             self.bar += 1
-            if self.bar % 50 == 0:
+            if self.bar % self.animation_speed == 0:
                 self.animation_count += self.foo
 
 
