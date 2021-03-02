@@ -29,14 +29,15 @@ class Mario:
         self.foo = 1
         self.bar = 1
         self.animation_speed = ANIMATION_SPEED
-        self.jump = False
+        self.in_air = False
         self.block_under = False
+        self.can_jump = True
 
     def draw(self):
         sc.blit(self.img, (self.x, self.y))
 
     def move(self):
-        oy = self.y
+        oy = 860
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a]:
             self.x -= self.speed
@@ -45,17 +46,21 @@ class Mario:
             self.animate()
         if keys[pygame.K_w]:
             self.img = MARIO_JUMP
-            self.jump = True
-            if oy - self.y < 300:
+            self.in_air = True
+            if oy - self.y < 300 and self.can_jump:
                 self.y -= SPEED
                 self.speed = SPEED * 0.3
+            else:
+                self.can_jump = False
         if self.y > 850 or self.block_under:
-            self.jump = False
+            self.in_air = False
             self.speed = SPEED
+            self.can_jump = True
         if not self.block_under and self.y < 860:
             self.y += SPEED / 2
         if self.y < 0:
             self.y += SPEED
+            self.jump = False
         if keys[pygame.K_ESCAPE]:
             exit()
         for event in pygame.event.get():
@@ -63,7 +68,7 @@ class Mario:
                 exit()
 
     def animate(self):
-        if not self.jump:
+        if not self.in_air:
             if self.animation_count == 2:
                 self.foo = -1
             elif self.animation_count == 0:
