@@ -2,6 +2,8 @@ import pygame
 import numpy
 import pickle
 from pygame.time import Clock
+import json
+
 
 # to-do:
 # make mario slow down when jumping at the point where everything starts scrolling
@@ -23,6 +25,10 @@ MARIO_RUN_0 = pygame.image.load('mario_run_0.png')
 MARIO_RUN_1 = pygame.image.load('mario_run_1.png')
 MARIO_RUN_2 = pygame.image.load('mario_run_2.png')
 MARIO_JUMP = pygame.image.load('mario_jump.png')
+LEVELS = {}
+
+with open("levels.json") as f:
+    LEVELS = json.load(f)
 
 bgX = 0
 bgX2 = BG_IMAGE.get_width()
