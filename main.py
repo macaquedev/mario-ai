@@ -113,6 +113,10 @@ class Mushroom:
         self.left_x = LEVELS[str(1)]["mushrooms"][num]["left_x"]
         self.right_x = LEVELS[str(1)]["mushrooms"][num]["right_x"]
         self.y = LEVELS[str(1)]["mushrooms"][num]["y"]
+        self.img = MUSHROOM
+
+    def draw(self):
+        sc.blit(self.img, (self.left_x, self.right_x))
 
 
 mario = Mario()
@@ -130,6 +134,7 @@ while True:
     clock.tick(FPS)
     draw_window(sc)
     mario.move()
+    mushroom.draw()
     if mario.x > 1920 / 2 - 75:
         bgX -= SCROLL_SPEED
         bgX2 -= SCROLL_SPEED
