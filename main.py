@@ -30,6 +30,8 @@ LEVELS = {}
 with open("levels.json") as f:
     LEVELS = json.load(f)
 
+MUSHROOM = pygame.image.load('mushroom.png')
+
 bgX = 0
 bgX2 = BG_IMAGE.get_width()
 
@@ -106,6 +108,9 @@ class Block:
     def __init__(self):
         pass
 
+class Mushroom:
+    def __init__(self):
+        pass#put your json stuff here
 
 mario = Mario()
 
