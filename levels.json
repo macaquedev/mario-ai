@@ -1,8 +1,22 @@
 {
   "1": {
-    "mushrooms": {
-
-    }
+    "mushrooms": [
+      {
+        "x": 20,
+        "y": 20,
+        "movement_width": 20
+      },
+      {
+        "x": 30,
+        "y": 10,
+        "movement_width": 20
+      },
+      {
+        "x": 40,
+        "y": 40,
+        "movement_width": 20
+      }
+    ]
   },
   "2": {
     "mushrooms": {
