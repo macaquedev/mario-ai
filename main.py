@@ -4,7 +4,6 @@ import pickle
 from pygame.time import Clock
 import json
 
-
 # to-do:
 # make mario slow down when jumping at the point where everything starts scrolling
 # create platforms
@@ -108,9 +107,11 @@ class Block:
     def __init__(self):
         pass
 
+
 class Mushroom:
     def __init__(self):
-        pass#put your json stuff here
+        pass  # put your json stuff here
+
 
 mario = Mario()
 
