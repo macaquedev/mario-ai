@@ -109,14 +109,14 @@ class Block:
 
 
 class Mushroom:
-    def __init__(self, num):
-        self.x = LEVELS[str(num)]["mushrooms"]["x"]
-        self.y = LEVELS[str(num)]["mushrooms"]["y"]
-        self.movement_width = LEVELS[str(num)]["mushrooms"]["movement_width"]
+    def __init__(self, level, num):
+        self.left_x = LEVELS[str(1)]["mushrooms"][num]["left_x"]
+        self.right_x = LEVELS[str(1)]["mushrooms"][num]["right_x"]
+        self.y = LEVELS[str(1)]["mushrooms"][num]["y"]
 
 
 mario = Mario()
-
+mushroom = Mushroom(1, 0)
 
 def draw_window(sc):
     sc.blit(BG_IMAGE, (bgX, 0))

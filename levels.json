@@ -2,19 +2,19 @@
   "1": {
     "mushrooms": [
       {
-        "x": 20,
-        "y": 20,
-        "movement_width": 20
+        "left_x": 20,
+        "right_x": 20,
+        "y": 20
       },
       {
-        "x": 30,
-        "y": 10,
-        "movement_width": 20
+        "left_x": 20,
+        "right_x": 20,
+        "y": 20
       },
       {
-        "x": 40,
-        "y": 40,
-        "movement_width": 20
+        "left_x": 20,
+        "right_x": 20,
+        "y": 20
       }
     ]
   },
