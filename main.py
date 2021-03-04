@@ -11,10 +11,6 @@ from pygame.time import Clock
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
-#  pygame.mixer.init()
-#  pygame.mixer.music.load('mario_theme.mp3')
-#  pygame.mixer.music.play(-1)
-
 clock = Clock()
 RUN_SPEED = 10
 JUMP_SPEED = 20
