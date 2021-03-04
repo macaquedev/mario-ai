@@ -118,6 +118,7 @@ class Mushroom:
 mario = Mario()
 mushroom = Mushroom(1, 0)
 
+
 def draw_window(sc):
     sc.blit(BG_IMAGE, (bgX, 0))
     sc.blit(BG_IMAGE, (bgX2, 0))
