@@ -1,18 +1,15 @@
 import pygame
-import numpy
-import pickle
-from pygame.time import Clock
 import json
-
-# to-do:
-# make mario slow down when jumping at the point where everything starts scrolling
-# create platforms
-# create enemies
+import pickle
 
 pygame.init()
 sc = pygame.display.set_mode((1920, 1080))
 
-clock = Clock()
+# pygame.mixer.init()
+# pygame.mixer.music.load('mario_theme.mp3')
+# pygame.mixer.music.play(-1)
+
+clock = pygame.time.Clock()
 RUN_SPEED = 10
 JUMP_SPEED = 20
 SCROLL_SPEED = RUN_SPEED
@@ -27,8 +24,6 @@ MARIO_JUMP = pygame.image.load('imgs/mario_jump.png')
 GOOMBA_0 = pygame.image.load('imgs/mushroom_0.png')
 GOOMBA_1 = pygame.image.load('imgs/mushroom_1.png')
 GOOMBA_DEAD = pygame.image.load('imgs/mushroom_dead.png')
-
-LEVELS = {}
 
 with open("levels.json") as f:
     LEVELS = json.load(f)
