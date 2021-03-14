@@ -26,6 +26,7 @@ MARIO_RUN_2 = pygame.image.load('imgs/mario_run_2.png')
 MARIO_JUMP = pygame.image.load('imgs/mario_jump.png')
 GOOMBA_0 = pygame.image.load('imgs/mushroom_0.png')
 GOOMBA_1 = pygame.image.load('imgs/mushroom_1.png')
+GOOMBA_DEAD = pygame.image.load('imgs/mushroom_dead.png')
 
 LEVELS = {}
 
@@ -117,6 +118,7 @@ class Mushroom:
         self.img = GOOMBA_0
         self.foo = 1
         self.bar = 1
+        self.eggs = 1
         self.animation_count = 0
         self.animation_speed = ANIMATION_SPEED
 
@@ -140,6 +142,20 @@ class Mushroom:
         if self.bar % self.animation_speed == 0:
             self.animation_count += self.foo
 
+    def dead(self):
+        self.img = GOOMBA_DEAD
+        self.eggs += 1
+        if self.eggs - 15 == 0:
+            self.y = 2000
+
+
+def collision(mario, mushroom):
+    if abs(mario.x - mushroom.left_x) < 10 and mario.y > 800:
+        if mario.y + mario.img.get_height() < mushroom.y:
+            mushroom.dead()
+        else:
+            mario.x = 40
+
 
 mario = Mario()
 mushroom0 = Mushroom(1, 1)
@@ -161,6 +177,8 @@ while True:
     mario.move()
     mushroom0.move()
     mushroom1.move()
+    collision(mario, mushroom0)
+    collision(mario, mushroom1)
     if mario.x > 1920 / 2 - 75:
         bgX -= SCROLL_SPEED
         bgX2 -= SCROLL_SPEED
