@@ -142,13 +142,15 @@ class Mushroom:
 
 
 mario = Mario()
-mushroom1 = Mushroom(1, 1)
+mushroom0 = Mushroom(1, 1)
+mushroom1 = Mushroom(1, 0)
 
 
 def draw_window(sc):
     sc.blit(BG_IMAGE, (bgX, 0))
     sc.blit(BG_IMAGE, (bgX2, 0))
     mushroom1.draw()
+    mushroom0.draw()
     mario.draw()
 
 
@@ -157,6 +159,7 @@ while True:
     clock.tick(FPS)
     draw_window(sc)
     mario.move()
+    mushroom0.move()
     mushroom1.move()
     if mario.x > 1920 / 2 - 75:
         bgX -= SCROLL_SPEED
