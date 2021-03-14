@@ -112,21 +112,21 @@ class Block:
 
 class Mushroom:
     def __init__(self, level, num):
-        self.left_x = LEVELS[str(1)]["mushrooms"][num]["left_x"]
-        self.right_x = LEVELS[str(1)]["mushrooms"][num]["right_x"]
+        self.x = LEVELS[str(1)]["mushrooms"][num]["x"]
         self.y = LEVELS[str(1)]["mushrooms"][num]["y"]
         self.img = GOOMBA_0
         self.foo = 1
         self.bar = 1
         self.eggs = 1
+        self.dead = False
         self.animation_count = 0
         self.animation_speed = ANIMATION_SPEED
 
     def draw(self):
-        sc.blit(self.img, (self.left_x, self.right_x))
+        sc.blit(self.img, (self.x, self.y))
 
     def move(self):
-        self.left_x -= 6
+        self.x -= 6
         self.animate()
 
     def animate(self):
@@ -142,17 +142,19 @@ class Mushroom:
         if self.bar % self.animation_speed == 0:
             self.animation_count += self.foo
 
-    def dead(self):
-        self.img = GOOMBA_DEAD
-        self.eggs += 1
-        if self.eggs - 15 == 0:
-            self.y = 2000
+    def check_dead(self):
+        if self.dead:
+            self.y = 920
+            self.img = GOOMBA_DEAD
+            self.eggs += 1
+            if self.eggs > 10:
+                self.y = 2000
 
 
 def collision(mario, mushroom):
-    if abs(mario.x - mushroom.left_x) < 10 and mario.y > 800:
-        if mario.y + mario.img.get_height() < mushroom.y:
-            mushroom.dead()
+    if abs(mario.x - mushroom.x) < 10 and mario.y > 800:
+        if mario.y + mario.img.get_height() - 40 < mushroom.y:
+            mushroom.dead = True
         else:
             mario.x = 40
 
@@ -177,6 +179,8 @@ while True:
     mario.move()
     mushroom0.move()
     mushroom1.move()
+    mushroom0.check_dead()
+    mushroom1.check_dead()
     collision(mario, mushroom0)
     collision(mario, mushroom1)
     if mario.x > 1920 / 2 - 75:
