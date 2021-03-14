@@ -106,7 +106,7 @@ class Block:
 
 
 class Mushroom:
-    def __init__(self, level, num):
+    def __init__(self, num):
         self.x = LEVELS[str(1)]["mushrooms"][num]["x"]
         self.y = LEVELS[str(1)]["mushrooms"][num]["y"]
         self.img = GOOMBA_0
@@ -155,8 +155,8 @@ def collision(mario, mushroom):
 
 
 mario = Mario()
-mushroom0 = Mushroom(1, 1)
-mushroom1 = Mushroom(1, 0)
+mushroom0 = Mushroom(0)
+mushroom1 = Mushroom(1)
 
 
 def draw_window(sc):
