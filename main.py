@@ -18,18 +18,19 @@ JUMP_SPEED = 20
 SCROLL_SPEED = RUN_SPEED
 ANIMATION_SPEED = 5
 FPS = 30
-BG_IMAGE = pygame.image.load('bg_img.jpg')
-MARIO = pygame.image.load('mario_still.png')
-MARIO_RUN_0 = pygame.image.load('mario_run_0.png')
-MARIO_RUN_1 = pygame.image.load('mario_run_1.png')
-MARIO_RUN_2 = pygame.image.load('mario_run_2.png')
-MARIO_JUMP = pygame.image.load('mario_jump.png')
+BG_IMAGE = pygame.image.load('imgs/bg_img.jpg')
+MARIO = pygame.image.load('imgs/mario_still.png')
+MARIO_RUN_0 = pygame.image.load('imgs/mario_run_0.png')
+MARIO_RUN_1 = pygame.image.load('imgs/mario_run_1.png')
+MARIO_RUN_2 = pygame.image.load('imgs/mario_run_2.png')
+MARIO_JUMP = pygame.image.load('imgs/mario_jump.png')
+GOOMBA_0 = pygame.image.load('imgs/mushroom_0.png')
+GOOMBA_1 = pygame.image.load('imgs/mushroom_1.png')
+
 LEVELS = {}
 
 with open("levels.json") as f:
     LEVELS = json.load(f)
-
-MUSHROOM = pygame.image.load('mushroom.png')
 
 bgX = 0
 bgX2 = BG_IMAGE.get_width()
@@ -113,19 +114,41 @@ class Mushroom:
         self.left_x = LEVELS[str(1)]["mushrooms"][num]["left_x"]
         self.right_x = LEVELS[str(1)]["mushrooms"][num]["right_x"]
         self.y = LEVELS[str(1)]["mushrooms"][num]["y"]
-        self.img = MUSHROOM
+        self.img = GOOMBA_0
+        self.foo = 1
+        self.bar = 1
+        self.animation_count = 0
+        self.animation_speed = ANIMATION_SPEED
 
     def draw(self):
         sc.blit(self.img, (self.left_x, self.right_x))
 
+    def move(self):
+        self.left_x -= 6
+        self.animate()
+
+    def animate(self):
+        if self.animation_count == 1:
+            self.foo = -1
+        elif self.animation_count == 0:
+            self.foo = 1
+        if self.animation_count == 0:
+            self.img = GOOMBA_0
+        elif self.animation_count == 1:
+            self.img = GOOMBA_1
+        self.bar += 1
+        if self.bar % self.animation_speed == 0:
+            self.animation_count += self.foo
+
 
 mario = Mario()
-mushroom = Mushroom(1, 0)
+mushroom1 = Mushroom(1, 1)
 
 
 def draw_window(sc):
     sc.blit(BG_IMAGE, (bgX, 0))
     sc.blit(BG_IMAGE, (bgX2, 0))
+    mushroom1.draw()
     mario.draw()
 
 
@@ -134,7 +157,7 @@ while True:
     clock.tick(FPS)
     draw_window(sc)
     mario.move()
-    mushroom.draw()
+    mushroom1.move()
     if mario.x > 1920 / 2 - 75:
         bgX -= SCROLL_SPEED
         bgX2 -= SCROLL_SPEED
