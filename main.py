@@ -148,38 +148,14 @@ class Mushroom:
 
 
 class NN:
-    def __init__(self, size, lr, discount):
-        self.lr = lr
-        self.discount = discount
+    def __init__(self, size):
         self.size = size
-        self.num_layers = len(size) - 1
-        self.weights_convo_one = np.array(np.random.random([100, 1]))
-        self.biases = np.array([np.random.random((y, 1)) for y in size[1:]])
-        self.weights = np.array([np.random.random((y, x)) for x, y in zip(size[1:-1], size[2:])])
-        self.activations = []
-        self.z = []
-        self.b_change = [np.zeros(b.shape) for b in self.biases]
-        self.w_change = [np.zeros(w.shape) for w in self.weights]
-        self.wc_change = [np.zeros(w.shape) for w in self.weights_convo_one]
+        self.num_layers = len(size)
+        self.biases = [[np.random.randn() for y in range(self.size[i])] for i in range(1, self.num_layers)]
+        print(self.biases)
 
-    def feedforward(self, a):
-        for b, w in zip(self.biases, self.weights):
-            a = np.dot(w, a) + b
-            self.activations.append(a)
-        return a
 
-    def backprop(self):
-        b_change = np.array([np.zeros(b.shape) for b in self.biases])
-        w_change = np.array([np.zeros(w.shape) for w in self.weights])
-        expected_a = 2 * self.activations[0]
-        observed_a = self.activations[-1]
-        cost = observed_a - expected_a
-        delta = cost
-        b_change[-1] = delta
-        w_change[-1] = np.multiply(delta, self.activations[-2])
-        self.biases -= b_change * self.learning_rate
-        self.weights -= w_change * self.learning_rate
-        self.activations = []
+nn = NN([3, 2, 1])
 
 
 def collision(mario, mushroom):
