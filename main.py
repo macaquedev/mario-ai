@@ -148,19 +148,19 @@ class Mushroom:
 
 
 class NN:
-    def __init__(self, size):
-        self.lr = 0.00025
-
-        self.discount = 0.985
+    def __init__(self, size, lr, discount):
+        self.lr = lr
+        self.discount = discount
         self.size = size
-        self.num_layers = len(size)
-        self.biases = [[np.random.randn() for i in range(self.size[a])] for a in range(1, self.num_layers)]
-        self.weights = [[[np.random.randn() for i in range(self.size[a + 1])] for i in range(self.size[a])] for a in
-                        range(1, self.num_layers - 1)]
-        self.nodes = [[0 for i in range(self.size[a])] for a in range(self.num_layers)]
-        self.outputs = [[]]
-        self.inputs = [[]]
-        self.all_activations = []
+        self.num_layers = len(size) - 1
+        self.weights_convo_one = np.array(np.random.random([100, 1]))
+        self.biases = np.array([np.random.random((y, 1)) for y in size[1:]])
+        self.weights = np.array([np.random.random((y, x)) for x, y in zip(size[1:-1], size[2:])])
+        self.activations = []
+        self.z = []
+        self.b_change = [np.zeros(b.shape) for b in self.biases]
+        self.w_change = [np.zeros(w.shape) for w in self.weights]
+        self.wc_change = [np.zeros(w.shape) for w in self.weights_convo_one]
 
     def feedforward(self, a):
         for b, w in zip(self.biases, self.weights):
