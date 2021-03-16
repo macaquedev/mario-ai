@@ -1,5 +1,6 @@
 import pygame
 import json
+import numpy as np
 import pickle
 
 pygame.init()
@@ -144,6 +145,33 @@ class Mushroom:
             self.eggs += 1
             if self.eggs > 10:
                 self.y = 2000
+
+
+class NN:
+    def __init__(self, lr):
+        self.learning_rate = lr
+        self.weights = np.random.randn(2)
+        self.biases = np.random.randn(2)
+        self.activations = []
+
+    def feedforward(self, a):
+        for b, w in zip(self.biases, self.weights):
+            a = np.dot(w, a) + b
+            self.activations.append(a)
+        return a
+
+    def backprop(self):
+        b_change = np.array([np.zeros(b.shape) for b in self.biases])
+        w_change = np.array([np.zeros(w.shape) for w in self.weights])
+        expected_a = 2 * self.activations[0]
+        observed_a = self.activations[-1]
+        cost = observed_a - expected_a
+        delta = cost
+        b_change[-1] = delta
+        w_change[-1] = np.multiply(delta, self.activations[-2])
+        self.biases -= b_change * self.learning_rate
+        self.weights -= w_change * self.learning_rate
+        self.activations = []
 
 
 def collision(mario, mushroom):
