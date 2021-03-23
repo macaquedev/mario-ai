@@ -154,7 +154,7 @@ class NN:
         self.biases = [[np.random.randn() for _ in range(self.size[i])] for i in range(1, self.num_layers)]
         self.weights = [[[np.random.randn() for _ in range(self.size[i + 1])] for j in range(self.size[i])] for i in
                         range(self.num_layers - 1)]
-        print([round(j, 2) for i in np.array(self.weights, dtype=object).flatten() for j in i])
+        # print([round(j, 2) for i in np.array(self.weights, dtype=object).flatten() for j in i])
 
     def feed_forward(self, inputs):
         for i in range(self.num_layers - 1):
