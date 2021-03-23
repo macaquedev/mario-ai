@@ -152,13 +152,15 @@ class NN:
         self.size = size
         self.num_layers = len(size)
         self.biases = [[np.random.randn() for _ in range(self.size[i])] for i in range(1, self.num_layers)]
-        self.weights = [
-            [[np.random.randn() for _ in range(self.size[i] * self.size[i + 1])] for i in range(self.num_layers - 1)]]
+        self.weights = [[[np.random.randn() for _ in range(self.size[i + 1])] for j in range(self.size[i])] for i in
+                        range(self.num_layers - 1)]
 
-        print(round(self.weights, 2))
+    def feed_forward(self, inputs):
+        for i in range(self.num_layers - 1):
+            np.dot(self.weights, inputs) + self.biases
 
 
-nn = NN([3, 2, 1])
+nn = NN([1, 1, 1])
 
 
 def collision(mario, mushroom):
