@@ -158,10 +158,22 @@ class NN:
 
     def feed_forward(self, inputs):
         for i in range(self.num_layers - 1):
-            np.dot(self.weights, inputs) + self.biases
+            inputs = np.dot(np.array(self.weights[i]).transpose(), inputs) + self.biases[i]
 
 
-nn = NN([1, 1, 1])
+def split_screen(mario, mushroom0, mushroom1):
+    tw = int(mario.x) - 150
+    th = int(mario.x) + 250
+    mushroom_in_square = []
+    for i in range(tw, th, 25):
+        if i < mushroom0.x < i + 25 or i < mushroom1.x < i + 25:
+            mushroom_in_square.append(1)
+        else:
+            mushroom_in_square.append(0)
+    return mushroom_in_square
+
+
+nn = NN([16, 10, 4])
 
 
 def collision(mario, mushroom):
@@ -189,6 +201,7 @@ while True:
     sc.fill((0, 0, 0))
     clock.tick(FPS)
     draw_window(sc)
+    nn.feed_forward(split_screen(mario, mushroom0, mushroom1))
     mario.move()
     mushroom0.move()
     mushroom1.move()
